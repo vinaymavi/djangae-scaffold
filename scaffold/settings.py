@@ -113,7 +113,7 @@ STATIC_URL = '/static/'
 if DEBUG:
     CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
 
-# sensible default CPS settings, feel free to modify them
+# sensible default CSP settings, feel free to modify them
 CSP_DEFAULT_SRC = ("'self'", "*.gstatic.com")
 CSP_STYLE_SRC = ("'self'", "fonts.googleapis.com", "*.gstatic.com")
 CSP_FONT_SRC = ("'self'", "themes.googleusercontent.com", "*.gstatic.com")
