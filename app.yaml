@@ -6,7 +6,7 @@ threadsafe: true
 
 handlers:
 
-- url: /_ah/(mapreduce|queue|warmup|internalupload).*
+- url: /_ah/(mapreduce|queue|start|stop|warmup|internalupload).*
   script: scaffold.wsgi.application
   login: admin
   secure: always
