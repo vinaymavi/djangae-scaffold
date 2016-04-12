@@ -2,10 +2,10 @@
 Django settings for scaffold project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
+https://docs.djangoproject.com/en/1.8/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
+https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 from djangae.settings_base import * #Set up some AppEngine specific stuff
@@ -25,8 +25,6 @@ SECRET_KEY = get_app_config().secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-TEMPLATE_DEBUG = True
 
 # Application definition
 
@@ -57,16 +55,26 @@ MIDDLEWARE_CLASSES = (
     'djangosecure.middleware.SecurityMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    "session_csrf.context_processor"
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                "django.contrib.auth.context_processors.auth",
+                "django.core.context_processors.debug",
+                "django.core.context_processors.i18n",
+                "django.core.context_processors.media",
+                "django.core.context_processors.static",
+                "django.core.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                "session_csrf.context_processor"
+            ],
+            'debug': True,
+        },
+    },
+]
+
 
 SECURE_CHECKS = [
     "djangosecure.check.sessions.check_session_cookie_secure",
@@ -113,13 +121,13 @@ STATIC_URL = '/static/'
 if DEBUG:
     CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
 
-# sensible default CPS settings, feel free to modify them
+# sensible default CSP settings, feel free to modify them
 CSP_DEFAULT_SRC = ("'self'", "*.gstatic.com")
 CSP_STYLE_SRC = ("'self'", "fonts.googleapis.com", "*.gstatic.com")
 CSP_FONT_SRC = ("'self'", "themes.googleusercontent.com", "*.gstatic.com")
 CSP_FRAME_SRC = ("'self'", "www.google.com", "www.youtube.com", "accounts.google.com", "apis.google.com", "plus.google.com")
 CSP_SCRIPT_SRC = ("'self'", "*.googleanalytics.com", "*.google-analytics.com", "ajax.googleapis.com")
-CSP_IMG_SRC = ("'self'", "data:", "s.ytimg.com", "*.googleusercontent.com", "*.gstatic.com")
+CSP_IMG_SRC = ("'self'", "data:", "s.ytimg.com", "*.googleusercontent.com", "*.gstatic.com", "www.google-analytics.com")
 CSP_CONNECT_SRC = ("'self'", "plus.google.com", "www.google-analytics.com")
 
 

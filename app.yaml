@@ -13,6 +13,7 @@ handlers:
 
 - url: /_ah/internalupload.*
   script: scaffold.wsgi.application
+  secure: always
 
 - url: /static/admin/
   static_dir: sitepackages/django/contrib/admin/static/admin/
