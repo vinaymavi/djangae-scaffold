@@ -21,7 +21,7 @@ TEMPLATES[0]['OPTIONS']['debug'] = False
 
 # Remove unsafe-inline from CSP_STYLE_SRC. It's there in default to allow
 # Django error pages in DEBUG mode render necessary styles
-if 'unsafe-inline' in CSP_STYLE_SRC:
+if "'unsafe-inline'" in CSP_STYLE_SRC:
     CSP_STYLE_SRC = list(CSP_STYLE_SRC)
     CSP_STYLE_SRC.remove("'unsafe-inline'")
     CSP_STYLE_SRC = tuple(CSP_STYLE_SRC)
