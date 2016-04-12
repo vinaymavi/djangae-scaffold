@@ -18,4 +18,4 @@ SECURE_REDIRECT_EXEMPT = [
 SECURE_CHECKS += ["scaffold.checks.check_csp_sources_not_unsafe"]
 
 DEBUG = False
-TEMPLATES['OPTIONS']['debug'] = False
+TEMPLATES[0]['OPTIONS']['debug'] = False
