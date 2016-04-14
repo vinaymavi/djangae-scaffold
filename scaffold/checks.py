@@ -15,8 +15,17 @@ def check_csp_is_not_report_only():
 check_csp_is_not_report_only.messages = { "CSP_REPORT_ONLY_ENABLED" : "Please set 'CSP_REPORT_ONLY' to False" }
 
 
-CSP_SOURCE_NAMES = ['CSP_DEFAULT_SRC', 'CSP_SCRIPT_SRC', 'CSP_IMG_SRC', 'CSP_OBJECT_SRC'
-                    'CSP_MEDIA_SRC', 'CSP_FRAME_SRC', 'CSP_FONT_SRC', 'CSP_STYLE_SRC', 'CSP_CONNECT_SRC']
+CSP_SOURCE_NAMES = [
+    'CSP_DEFAULT_SRC',
+    'CSP_SCRIPT_SRC',
+    'CSP_IMG_SRC',
+    'CSP_OBJECT_SRC',
+    'CSP_MEDIA_SRC',
+    'CSP_FRAME_SRC',
+    'CSP_FONT_SRC',
+    'CSP_STYLE_SRC',
+    'CSP_CONNECT_SRC',
+]
 
 def check_csp_sources_not_unsafe():
     messages = []
