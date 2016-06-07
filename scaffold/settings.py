@@ -37,11 +37,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djangosecure',
     'csp',
     'cspreports',
     'djangae.contrib.gauth.datastore',
     'djangae.contrib.security',
+    'scaffold',
     # 'djangae.contrib.uniquetool',
 )
 
@@ -53,7 +53,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'csp.middleware.CSPMiddleware',
     'session_csrf.CsrfMiddleware',
-    'djangosecure.middleware.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 TEMPLATES = [
@@ -76,17 +77,11 @@ TEMPLATES = [
     },
 ]
 
-
-SECURE_CHECKS = [
-    "djangosecure.check.sessions.check_session_cookie_secure",
-    "djangosecure.check.sessions.check_session_cookie_httponly",
-    "djangosecure.check.djangosecure.check_security_middleware",
-    "djangosecure.check.djangosecure.check_sts",
-    "djangosecure.check.djangosecure.check_frame_deny",
-    "djangosecure.check.djangosecure.check_ssl_redirect",
-    "scaffold.checks.check_session_csrf_enabled",
-    "scaffold.checks.check_csp_is_not_report_only"
+SILENCED_SYSTEM_CHECKS = [
+    'security.W003', # We're using session_csrf version of CsrfMiddleware, so we can skip that check
 ]
+from .boot import register_custom_checks
+register_custom_checks()
 
 CSP_REPORT_URI = reverse_lazy('report_csp')
 CSP_REPORTS_LOG = True
