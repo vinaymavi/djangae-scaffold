@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 import session_csrf
 session_csrf.monkeypatch()
@@ -6,7 +6,7 @@ session_csrf.monkeypatch()
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = (
     # Examples:
     # url(r'^$', 'scaffold.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
