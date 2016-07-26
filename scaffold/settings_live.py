@@ -15,7 +15,6 @@ SECURE_REDIRECT_EXEMPT = [
 ]
 
 DEBUG = False
-TEMPLATES[0]['OPTIONS']['debug'] = False
 
 # Remove unsafe-inline from CSP_STYLE_SRC. It's there in default to allow
 # Django error pages in DEBUG mode render necessary styles
@@ -26,17 +25,9 @@ if "'unsafe-inline'" in CSP_STYLE_SRC:
 
 # Add the cached template loader for the Django template system (not for Jinja)
 for template in TEMPLATES:
-    if (
-        template['BACKEND'] == 'django.template.backends.django.DjangoTemplates' and
-        not template['OPTIONS'].get('loaders')
-    ):
-        # If and only if 'APP_DIRS' was True, include the app_directories loader as a sub-loader
-        # of the cached loader
-        app_dirs = template.get('APP_DIRS')
-        sub_loaders = ['django.template.loaders.filesystem.Loader']
-        if app_dirs:
-            sub_loaders.append('django.template.loaders.app_directories.Loader')
-        if app_dirs is not None:
-            del template['APP_DIRS']
-
-        template['OPTIONS']['loaders'] = [('django.template.loaders.cached.Loader', sub_loaders)]
+    template['OPTIONS']['debug'] = False
+    if template['BACKEND'] == 'django.template.backends.django.DjangoTemplates':
+        # Wrap the normal loaders with the cached loader
+        template['OPTIONS']['loaders'] = [
+            ('django.template.loaders.cached.Loader', template['OPTIONS']['loaders'])
+        ]
