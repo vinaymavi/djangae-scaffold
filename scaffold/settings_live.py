@@ -23,3 +23,20 @@ if "'unsafe-inline'" in CSP_STYLE_SRC:
     CSP_STYLE_SRC = list(CSP_STYLE_SRC)
     CSP_STYLE_SRC.remove("'unsafe-inline'")
     CSP_STYLE_SRC = tuple(CSP_STYLE_SRC)
+
+# Add the cached template loader for the Django template system (not for Jinja)
+for template in TEMPLATES:
+    if (
+        template['BACKEND'] == 'django.template.backends.django.DjangoTemplates' and
+        not template['OPTIONS'].get('loaders')
+    ):
+        # If and only if 'APP_DIRS' was True, include the app_directories loader as a sub-loader
+        # of the cached loader
+        app_dirs = template.get('APP_DIRS')
+        sub_loaders = ['django.template.loaders.filesystem.Loader']
+        if app_dirs:
+            sub_loaders.append('django.template.loaders.app_directories.Loader')
+        if app_dirs is not None:
+            del template['APP_DIRS']
+
+        template['OPTIONS']['loaders'] = [('django.template.loaders.cached.Loader', sub_loaders)]
