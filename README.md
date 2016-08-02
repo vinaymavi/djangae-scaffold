@@ -1,18 +1,28 @@
+{% if False %}
+# The Djangae Project Template
 
-# The Djangae Scaffold Project
+This is a barebones Django project template configured for use on App Engine using [Djangae](https://github.com/potatolondon/djangae)
 
-This is a barebones Django project configured for use on App Engine using [Djangae](https://github.com/potatolondon/djangae)
+
+## How to use this to create your project
 
 To get started:
 
- - Clone this repo (don't forget to change the origin to your own repo!)
- - Run `./install_deps` (this will pip install requirements, and download the App Engine SDK)
- - Run `./rename_scaffold_app.sh my_new_app_name` to rename the 'scaffold' app (and all references to it)
- - Run `python manage.py check --deploy --settings=my_new_app_name.settings_live` to run all security checks. Replace `my_new_app_name` with your new app name.
- - `python manage.py runserver`
+- Install any supported Django version (`$ pip install Django==1.9`)
+- Run this command replacing `projectname` with your desired project name:
 
-The install_deps helper script will install dependencies into a 'sitepackages' folder which is added to the path. Each time you run it your
-sitepackages will be wiped out and reinstalled with pip. The SDK will only be downloaded the first time (as it's a large download).
+```
+$ django-admin.py startproject 
+      --template https://github.com/potatolondon/djangae-project-template/zipball/master 
+      --extension py,yaml,md 
+      projectname
+```
+      
+- Run `cd projectname && ./install_deps` to install dependencies into a 'sitepackages' folder which is added to the path. 
+- Run `python manage.py check --deploy --settings=projectname.settings_live` to run all security checks. Replace `projectname` with your new app name.
+- Run `python manage.py runserver`
+
+Each time you run the `install_deps` script helper your sitepackages will be wiped out and reinstalled with pip. The SDK will only be downloaded the first time (as it's a large download).
 
 ## Deployment
 
@@ -40,3 +50,23 @@ If you are on OS X and using Homebrew-ed Python, you might get the following err
 [install]
 prefix=
 ```
+
+## License 
+
+Copyright 2014 Potato London Ltd.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+{% endif %}
+
+# {{ project_name }} project
