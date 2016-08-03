@@ -13,7 +13,7 @@ To get started:
 
 ```
 $ django-admin.py startproject 
-      --template https://github.com/potatolondon/djangae-project-template/zipball/master 
+      --template https://github.com/potatolondon/djangae-scaffold/zipball/master 
       --extension py,yaml,md 
       projectname
 ```
