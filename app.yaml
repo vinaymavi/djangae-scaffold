@@ -1,4 +1,4 @@
-application: scaffold
+application: {{ project_name }}
 version: 1
 runtime: python27
 api_version: 1
@@ -7,12 +7,12 @@ threadsafe: true
 handlers:
 
 - url: /_ah/(mapreduce|queue|warmup|start|stop).*
-  script: scaffold.wsgi.application
+  script: {{ project_name }}.wsgi.application
   login: admin
   secure: always
 
 - url: /_ah/internalupload.*
-  script: scaffold.wsgi.application
+  script: {{ project_name }}.wsgi.application
   secure: always
 
 - url: /static/admin/
@@ -21,12 +21,12 @@ handlers:
 
 # Set Django admin to be login:admin as well as Django's is_staff restriction
 - url: /admin.*
-  script: scaffold.wsgi.application
+  script: {{ project_name }}.wsgi.application
   secure: always
   login: admin
 
 - url: /.*
-  script: scaffold.wsgi.application
+  script: {{ project_name }}.wsgi.application
   secure: always
 
 skip_files:

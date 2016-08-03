@@ -2,11 +2,11 @@
 import os
 import sys
 
-from scaffold.boot import fix_path
+from {{ project_name }}.boot import fix_path
 fix_path()
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "scaffold.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "{{ project_name }}.settings")
 
     from djangae.core.management import execute_from_command_line
 
