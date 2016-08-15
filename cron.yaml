@@ -1,0 +1,4 @@
+cron:
+- description: Clear sessions
+  url: /_ah/clearsessions
+  schedule: every 1 hours
