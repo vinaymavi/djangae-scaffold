@@ -34,8 +34,8 @@ FEATURED_SDK_REPO = "https://storage.googleapis.com/appengine-sdks/featured/"
 DEPRECATED_SDK_REPO = "https://storage.googleapis.com/appengine-sdks/deprecated/%s/" % APPENGINE_SDK_VERSION.replace('.', '')
 
 
-if __name__ == "__main__":
-    #Make sure the user has everything they need
+def check_commands_installed():
+    """Check pip and git are installed."""
     where = 'which'
     if platform.system() == 'Windows':
         where = 'where'
@@ -46,10 +46,16 @@ if __name__ == "__main__":
         except subprocess.CalledProcessError:
             raise RuntimeError("You must install the '%s' command" % command)
 
+
+def create_sitepackages_dir():
+    """Create a sitepackages directory in the project root."""
     if not os.path.exists(TARGET_DIR):
         print('Creating `sitepackages` directory for dependencies...')
         os.makedirs(TARGET_DIR)
 
+
+def install_app_engine_sdk():
+    """Download and install the Google App Engine SDK."""
     if not os.path.exists(APPENGINE_TARGET_DIR):
         print('Downloading the AppEngine SDK...')
 
@@ -61,7 +67,10 @@ if __name__ == "__main__":
 
         #Handle other errors
         if sdk_file.getcode() >= 299:
-            raise Exception('App Engine SDK could not be found. {} returned code {}.'.format(sdk_file.geturl(), sdk_file.getcode()))
+            raise Exception(
+                'App Engine SDK could not be found. {} returned code {}.'.format(
+                    sdk_file.geturl(), sdk_file.getcode())
+            )
 
         zipfile = ZipFile(StringIO(sdk_file.read()))
         zipfile.extractall(DEV_TARGET_DIR)
@@ -71,15 +80,22 @@ if __name__ == "__main__":
             app = os.path.join(APPENGINE_TARGET_DIR, module)
             st = os.stat(app)
             os.chmod(app, st.st_mode | stat.S_IEXEC)
-    else:
-        print('Not updating SDK as it exists. Remove {} and re-run to get the latest SDK'.format(APPENGINE_TARGET_DIR))
 
+    else:
+        print(
+            'Not updating SDK as it exists. Remove {} and re-run to get the '
+            'latest SDK'.format(APPENGINE_TARGET_DIR)
+        )
+
+
+def install_requirements():
+    """Install all the prod and dev requirements into their respective directories."""
     pip_msg = "Running pip to install {filename} dependencies into {target}..."
+
     pip_targets = [
         (REQUIREMENTS_FILE, PROD_TARGET_DIR),
         (DEV_REQUIREMENTS_FILE, DEV_TARGET_DIR)
     ]
-
     for requirements, target in pip_targets:
 
         if os.path.exists(target):
@@ -95,8 +111,23 @@ if __name__ == "__main__":
                 elif os.path.isfile(path):
                     os.remove(path)
 
-        # install all the required third party libs
+        # install all the required third party libs into the target directory
         print(pip_msg.format(filename=os.path.basename(requirements), target=target))
         args = ["pip", "install", "-r", requirements, "-t", target, "-I"]
         p = subprocess.Popen(args)
         p.wait()
+
+
+if __name__ == "__main__":
+
+    # make sure pip and git are installed as the script relies on them
+    check_commands_installed()
+
+    # create a directory to store all the dependencies in
+    create_sitepackages_dir()
+
+    # install the app engine SDK if needed
+    install_app_engine_sdk()
+
+    # install all the python requirements into sitepackages
+    install_requirements()
