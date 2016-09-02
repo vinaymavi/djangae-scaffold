@@ -19,8 +19,11 @@ REQUIREMENTS_DIR = os.path.join(PROJECT_DIR, "requirements")
 REQUIREMENTS_FILE = os.path.join(REQUIREMENTS_DIR, "prod.txt")
 DEV_REQUIREMENTS_FILE = os.path.join(REQUIREMENTS_DIR, "dev.txt")
 TARGET_DIR = os.path.join(PROJECT_DIR, "sitepackages")
+DEV_TARGET_DIR = os.path.join(TARGET_DIR, "dev")
+PROD_TARGET_DIR = os.path.join(TARGET_DIR, "prod")
 
-APPENGINE_TARGET_DIR = os.path.join(TARGET_DIR, "google_appengine")
+# we don't need to upload the SDK so it lives in the dev sitepackages directory
+APPENGINE_TARGET_DIR = os.path.join(DEV_TARGET_DIR, "google_appengine")
 
 APPENGINE_SDK_VERSION = "1.9.40"
 APPENGINE_SDK_FILENAME = "google_appengine_%s.zip" % APPENGINE_SDK_VERSION
@@ -61,7 +64,7 @@ if __name__ == "__main__":
             raise Exception('App Engine SDK could not be found. {} returned code {}.'.format(sdk_file.geturl(), sdk_file.getcode()))
 
         zipfile = ZipFile(StringIO(sdk_file.read()))
-        zipfile.extractall(TARGET_DIR)
+        zipfile.extractall(DEV_TARGET_DIR)
 
         #Make sure the dev_appserver and appcfg are executable
         for module in ("dev_appserver.py", "appcfg.py"):
@@ -71,25 +74,29 @@ if __name__ == "__main__":
     else:
         print('Not updating SDK as it exists. Remove {} and re-run to get the latest SDK'.format(APPENGINE_TARGET_DIR))
 
+    pip_msg = "Running pip to install {filename} dependencies into {target}..."
+    pip_targets = [
+        (REQUIREMENTS_FILE, PROD_TARGET_DIR),
+        (DEV_REQUIREMENTS_FILE, DEV_TARGET_DIR)
+    ]
 
-    #Remove all folders and files, we leave symlinks as they will be pointing
-    #to submodules
-    filenames = (filename for filename in os.listdir(TARGET_DIR) if filename not in FILES_IGNORED_FOR_DELETION)
-    for filename in filenames:
-        path = os.path.join(TARGET_DIR, filename)
-        if os.path.isdir(path) and not os.path.islink(path):
-            shutil.rmtree(path)
-        elif os.path.isfile(path):
-            os.remove(path)
+    for requirements, target in pip_targets:
 
-    pip_msg = "Running pip to install {filename} dependencies..."
+        if os.path.exists(target):
+            # remove all folders and files, leaving symlinks which point to submodules
+            filenames = (
+                filename for filename in os.listdir(target) if
+                filename not in FILES_IGNORED_FOR_DELETION
+            )
+            for filename in filenames:
+                path = os.path.join(target, filename)
+                if os.path.isdir(path) and not os.path.islink(path):
+                    shutil.rmtree(path)
+                elif os.path.isfile(path):
+                    os.remove(path)
 
-    print(pip_msg.format(filename=os.path.basename(REQUIREMENTS_FILE)))
-    args = ["pip", "install", "-r", REQUIREMENTS_FILE, "-t", TARGET_DIR, "-I"]
-    p = subprocess.Popen(args)
-    p.wait()
-
-    print(pip_msg.format(filename=os.path.basename(DEV_REQUIREMENTS_FILE)))
-    args = ["pip", "install", "-r", DEV_REQUIREMENTS_FILE, "-I"]
-    p = subprocess.Popen(args)
-    p.wait()
+        # install all the required third party libs
+        print(pip_msg.format(filename=os.path.basename(requirements), target=target))
+        args = ["pip", "install", "-r", requirements, "-t", target, "-I"]
+        p = subprocess.Popen(args)
+        p.wait()
