@@ -2,7 +2,7 @@
 import os
 import sys
 
-from project_name.boot import fix_path
+from {{ project_name }}.boot import fix_path
 fix_path(include_dev_libs_path=True)
 
 if __name__ == "__main__":
