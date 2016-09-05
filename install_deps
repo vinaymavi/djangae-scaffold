@@ -10,9 +10,9 @@ from StringIO import StringIO
 from zipfile import ZipFile
 from urllib import urlopen
 
-REQUIREMENTS = [ "pip", "git" ]
+REQUIREMENTS = ["pip", "git"]
 
-FILES_IGNORED_FOR_DELETION = [ "google_appengine" ]
+FILES_IGNORED_FOR_DELETION = ["google_appengine"]
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 REQUIREMENTS_DIR = os.path.join(PROJECT_DIR, "requirements")
@@ -61,13 +61,13 @@ def install_app_engine_sdk():
     if not os.path.exists(APPENGINE_TARGET_DIR):
         print('Downloading the AppEngine SDK...')
 
-        #First try and get it from the 'featured' folder
+        # First try and get it from the 'featured' folder
         sdk_file = urlopen(FEATURED_SDK_REPO + APPENGINE_SDK_FILENAME)
         if sdk_file.getcode() == 404:
-            #Failing that, 'deprecated'
+            # Failing that, 'deprecated'
             sdk_file = urlopen(DEPRECATED_SDK_REPO + APPENGINE_SDK_FILENAME)
 
-        #Handle other errors
+        # Handle other errors
         if sdk_file.getcode() >= 299:
             raise Exception(
                 'App Engine SDK could not be found. {} returned code {}.'.format(
@@ -77,7 +77,7 @@ def install_app_engine_sdk():
         zipfile = ZipFile(StringIO(sdk_file.read()))
         zipfile.extractall(DEV_TARGET_DIR)
 
-        #Make sure the dev_appserver and appcfg are executable
+        # Make sure the dev_appserver and appcfg are executable
         for module in ("dev_appserver.py", "appcfg.py"):
             app = os.path.join(APPENGINE_TARGET_DIR, module)
             st = os.stat(app)
