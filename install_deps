@@ -49,13 +49,6 @@ def check_commands_installed():
             raise RuntimeError("You must install the '{}' command".format(command))
 
 
-def create_sitepackages_dir():
-    """Create a sitepackages directory in the project root."""
-    if not os.path.exists(TARGET_DIR):
-        print('Creating `sitepackages` directory for dependencies...')
-        os.makedirs(TARGET_DIR)
-
-
 def install_app_engine_sdk():
     """Download and install the Google App Engine SDK."""
     if not os.path.exists(APPENGINE_TARGET_DIR):
@@ -124,9 +117,6 @@ if __name__ == "__main__":
 
     # make sure pip and git are installed as the script relies on them
     check_commands_installed()
-
-    # create a directory to store all the dependencies in
-    create_sitepackages_dir()
 
     # install the app engine SDK if needed
     install_app_engine_sdk()
