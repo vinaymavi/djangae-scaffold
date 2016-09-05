@@ -9,14 +9,16 @@ APPENGINE_DIR = join(DEV_SITEPACKAGES_DIR, "google_appengine")
 
 
 def fix_path(include_dev_libs_path=False):
-    if exists(APPENGINE_DIR) and APPENGINE_DIR not in sys.path:
-        sys.path.insert(1, APPENGINE_DIR)
+    """ Insert libs folder(s) and SDK into sys.path. The one(s) inserted last take priority. """
+    if include_dev_libs_path:
+        if exists(APPENGINE_DIR) and APPENGINE_DIR not in sys.path:
+            sys.path.insert(1, APPENGINE_DIR)
+
+        if DEV_SITEPACKAGES_DIR not in sys.path:
+            sys.path.insert(1, DEV_SITEPACKAGES_DIR)
 
     if SITEPACKAGES_DIR not in sys.path:
         sys.path.insert(1, PROD_SITEPACKAGES_DIR)
-
-    if include_dev_libs_path and DEV_SITEPACKAGES_DIR not in sys.path:
-            sys.path.insert(1, DEV_SITEPACKAGES_DIR)
 
 
 def get_app_config():
