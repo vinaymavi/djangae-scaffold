@@ -15,8 +15,8 @@ handlers:
   script: {{ project_name }}.wsgi.application
   secure: always
 
-- url: /static/admin/
-  static_dir: sitepackages/django/contrib/admin/static/admin/
+- url: /static
+  static_dir: static/
   secure: always
 
 # Set Django admin to be login:admin as well as Django's is_staff restriction
