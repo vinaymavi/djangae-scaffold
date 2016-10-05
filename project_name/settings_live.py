@@ -8,6 +8,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_SSL_REDIRECT = True
 
+# Using a route that is caught by appengines app.yaml, be sure to collectstatic before
+# doing a deploy
+STATIC_URL = '/static/'
+
 SECURE_REDIRECT_EXEMPT = [
     # App Engine doesn't use HTTPS internally, so the /_ah/.* URLs need to be exempt.
     # Django compares these to request.path.lstrip("/"), hence the lack of preceding /
