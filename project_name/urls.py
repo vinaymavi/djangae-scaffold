@@ -24,4 +24,4 @@ urlpatterns = (
 )
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, view=serve, show_indexes=True)
+    urlpatterns += tuple(static(settings.STATIC_URL, view=serve, show_indexes=True))
