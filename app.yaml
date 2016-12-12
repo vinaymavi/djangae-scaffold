@@ -6,7 +6,7 @@ threadsafe: true
 
 handlers:
 
-- url: /_ah/(mapreduce|queue|warmup|start|stop).*
+- url: /_ah/(clearsessions|mapreduce|queue|warmup|start|stop).*
   script: {{ project_name }}.wsgi.application
   login: admin
   secure: always
