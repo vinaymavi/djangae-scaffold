@@ -83,8 +83,6 @@ TEMPLATES = [
 SILENCED_SYSTEM_CHECKS = [
     'security.W003', # We're using session_csrf version of CsrfMiddleware, so we can skip that check
 ]
-from .boot import register_custom_checks
-register_custom_checks()
 
 CSP_REPORT_URI = reverse_lazy('report_csp')
 CSP_REPORTS_LOG = True
