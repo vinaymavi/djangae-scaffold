@@ -30,11 +30,16 @@ handlers:
   secure: always
 
 skip_files:
-    - manage.py
-    - README.md
-    - install_deps
-    - requirements.txt
-    - sitepackages/dev*
-    - \.storage.*
-    - \.git
-    - (.*)\.pyc
+  - ^manage\.py$
+  - ^README\.md$
+  - ^install_deps$
+  - ^requirements/.*\.txt$
+  - ^sitepackages/dev.*
+  - ^.*\.(egg|dist)-info/.*$
+
+  # Defaults.
+  - ^(.*/)?#.*#$
+  - ^(.*/)?.*~$
+  - ^(.*/)?.*\.py[co]$
+  - ^(.*/)?.*/RCS/.*$
+  - ^(.*/)?\..*$
