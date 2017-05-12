@@ -9,3 +9,6 @@ six
 # These are forks of Google's libraries, which contain various fixes and patches
 #git+https://github.com/potatolondon/appengine-pipelines.git
 #git+https://github.com/potatolondon/potato-mapreduce.git#egg=mapreduce
+
+# Uncomment this if you want to use djangae.fields.ComputedCollationField
+# pyuca
