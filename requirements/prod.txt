@@ -11,4 +11,4 @@ six
 #git+https://github.com/potatolondon/potato-mapreduce.git#egg=mapreduce
 
 # Uncomment this if you want to use djangae.fields.ComputedCollationField
-# pyuca
+# pyuca==1.1.2
