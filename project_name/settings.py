@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 from djangae.settings_base import * #Set up some AppEngine specific stuff
+from djangae.contrib.gauth.settings import *
 from django.core.urlresolvers import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -128,6 +129,3 @@ CSP_FRAME_SRC = ("'self'", "www.google.com", "www.youtube.com", "accounts.google
 CSP_SCRIPT_SRC = ("'self'", "*.googleanalytics.com", "*.google-analytics.com", "ajax.googleapis.com")
 CSP_IMG_SRC = ("'self'", "data:", "s.ytimg.com", "*.googleusercontent.com", "*.gstatic.com", "www.google-analytics.com")
 CSP_CONNECT_SRC = ("'self'", "plus.google.com", "www.google-analytics.com")
-
-
-from djangae.contrib.gauth.settings import *
