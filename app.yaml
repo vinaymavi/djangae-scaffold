@@ -29,6 +29,9 @@ handlers:
   script: {{ project_name }}.wsgi.application
   secure: always
 
+env_variables:
+  PYTHONHTTPSVERIFY: 1
+
 skip_files:
   - ^manage\.py$
   - ^README\.md$
