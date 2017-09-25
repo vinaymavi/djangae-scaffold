@@ -12,10 +12,7 @@ To get started:
 - Run this command replacing `projectname` with your desired project name:
 
 ```
-$ django-admin.py startproject 
-      --template https://github.com/potatolondon/djangae-scaffold/zipball/master 
-      --extension py,yaml,md 
-      projectname
+$ django-admin.py startproject  --template https://github.com/potatolondon/djangae-scaffold/zipball/master  --extension py,yaml,md  projectname
 ```
       
 - Run `cd projectname && ./install_deps` to install dependencies into a 'sitepackages' folder which is added to the path. 
