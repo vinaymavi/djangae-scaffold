@@ -8,7 +8,7 @@ This is a barebones Django project template configured for use on App Engine usi
 
 To get started:
 
-- Install any supported Django version (`$ pip install Django==1.9`)
+- Install any supported Django version (`$ pip install Django==1.11`)
 - Run this command replacing `projectname` with your desired project name:
 
 ```
