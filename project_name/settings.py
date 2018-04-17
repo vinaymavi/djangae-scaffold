@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     # 'djangae.contrib.uniquetool',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'djangae.contrib.security.middleware.AppEngineSecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
